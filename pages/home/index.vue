@@ -12,20 +12,22 @@
               <v-btn @click="addTodo" color="primary" outlined>Tambah</v-btn>
             </v-card-text>
           </v-card>
-  
           <v-card v-if="getTodos.length > 0" class="mt-5" color="transparent">
             <v-list dense>
               <v-list-item v-for="(todo, index) in getTodos" :key="index">
                 <v-row align="center">
                   <v-col cols="1">
                     <v-checkbox
-                      :input-value="todo.completed"
+                      v-model="todo.completed"
                       @click="updateTodo(index)"
                       color="primary"
                     ></v-checkbox>
                   </v-col>
-                  <v-col cols="11">
+                  <v-col cols="10">
                     <v-text-field v-model="todo.name" outlined dense></v-text-field>
+                  </v-col>
+                  <v-col cols="1">
+                    <v-icon @click="deleteTodo(index)" color="red">mdi-delete</v-icon>
                   </v-col>
                 </v-row>
               </v-list-item>
@@ -35,15 +37,12 @@
       </v-row>
     </v-container>
   </template>
-  
-  
-  
   <script>
    import { useTodos } from '~/stores/todolist';
    export default defineComponent({
     name: 'Index',
     setup() {
-      const { getTodos, addTodo, updateTodo, persist } = useTodos();
+      const { getTodos, addTodo, updateTodo, persist, deleteTodo } = useTodos();
       const newTodo = ref('');
   
       const addNewTodo = () => {
@@ -62,6 +61,7 @@
         newTodo,
         addTodo: addNewTodo,
         updateTodo,
+        deleteTodo
       };
     }
   });

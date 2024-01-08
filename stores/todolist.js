@@ -14,9 +14,14 @@ export const useTodos = defineStore({
       this.todos[index].completed = !this.todos[index].completed;
       this.persist();
     },
+    deleteTodo(index) {
+      this.todos.splice(index, 1);
+      this.persist();
+    },
     editTodo() {
       this.persist();
     },
+    
     persist() {
       localStorage.setItem('todos', JSON.stringify(this.todos));
     },
